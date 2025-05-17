@@ -23,7 +23,7 @@ A web application that predicts the urgency level of patients in an Emergency Ro
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/Harshini-K18/ER_Triage_Predictor.git
+  https://github.com/Deekshavpanchal01/ER_Triage_Predictor.git
    cd ER_Triage_Predictor
    ```
 
