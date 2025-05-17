@@ -1,0 +1,120 @@
+.page-bg {
+  background: url('skin.jpg');
+  webkit-filter: blur(3px);
+  moz-filter: blur(3px);
+  o-filter: blur(3px);
+  ms-filter: blur(3px);
+  filter: blur(3px);
+  position: fixed;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  box-shadow: 2px 2px 2px;
+  opacity: 0.5;
+  filter: alpha(opacity=30);
+}
+
+.beating-heart {
+  color: #e63946;
+  display: inline-block;
+  animation: beat 1s infinite;
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  20% { transform: scale(1.2); }
+  40% { transform: scale(0.95); }
+  60% { transform: scale(1.15); }
+  80% { transform: scale(0.98); }
+}
+h1 {
+  text-align: center;
+  font-size: 350%;
+  color: rgb(7, 79, 110);
+}
+a {
+  font-size: 100%;
+  color: DarkSlateGrey;
+}
+li{
+  list-style-type: none;
+  font-size: 150%;
+  color: DarkSlateGrey;
+  width: 50%;
+}
+table{
+  table-layout: auto;
+  width: 100%;
+  margin:25px 0 0 25px;
+  color: DarkSlateGrey;
+}
+label{
+  color: DarkSlateGrey;
+}
+.form_days{
+  color: DarkSlateGrey;
+  font-size: 125%;
+  width: 50%;
+}
+.statistics{
+  color: DarkSlateGrey;
+  position: relative;
+  left: 30px;
+  top: 100px;
+}
+.result{
+  color: #800000;
+  font-size: xx-large;
+  font-weight: bold;
+}
+.title{
+  font-size: 160%;
+}
+.tab_head {
+  font-size: 150%;
+}
+.pred_title{
+  color: DarkSlateGrey;
+  font-size: 200%;
+  position: relative;
+  left: 30px;
+}
+.all{
+  position: relative;
+  top: 75px;
+}
+.form-control{
+  font-size: 120%;
+}
+p {
+  color: DarkSlateGrey;
+  font-size: 120%;
+  font-weight: bold;
+}
+.btn-default {
+  color: DarkSlateGrey;
+  font-size: 100%;
+  border: 2px solid DarkSlateGrey;
+}
+.btn-default:hover {
+  background-color: DarkSlateGrey;
+  font-size: 100%;
+  color: white;
+}
+.btn-primary {
+  background-color: #0000;
+  color: DarkSlateGrey;
+  font-size: 100%;
+  border: 2px solid DarkSlateGrey;
+}
+.btn-primary:hover {
+  background-color: DarkSlateGrey;
+  font-size:100%;
+  color: white;
+  border: 2px solid DarkSlateGrey;
+}

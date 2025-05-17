@@ -1,0 +1,400 @@
+{% extends "index.html" %}
+{% block content %}
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<!-- Lora Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+<link rel="icon" href="static\fav.ico" type="image/x-icon" />
+
+
+<style>
+body {
+  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+  font-family: 'Lora', serif;
+}
+/* Pop-up animation keyframes */
+@keyframes popUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(40px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Apply pop-up to dashboard and pred.mt-4 */
+.dashboard,
+.pred.mt-4 {
+  animation: popUp 1.7s cubic-bezier(.23,1.02,.32,1) both;
+}
+
+/* Bounce-in for section labels */
+@keyframes bounceInLabel {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(-30px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.card-form {
+  animation: bounceInLabel 0.8s cubic-bezier(.23,1.02,.32,1) both;
+}
+
+
+.form-section-label {
+  font-weight: 600;
+  color: #15597c;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 1.08em;
+  letter-spacing: 0.5px;
+}
+.card-form {
+  background: #fff;
+  border: 2px solid #e63946;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  padding: 28px 18px 18px 18px;
+  max-width: 100%;
+  margin: 0 auto 32px auto;
+}
+.form-group {
+  margin-bottom: 18px;
+}
+.input-icon {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.input-icon i {
+  font-size: 1.3em;
+  color: #e63946;
+  margin-right: 10px;
+  min-width: 28px;
+  text-align: center;
+}
+.input-icon label {
+  margin-bottom: 0;
+  font-weight: 500;
+  color: #15597c;
+  flex: 1;
+}
+.input-icon input,
+.input-icon select {
+  flex: 2;
+  margin-left: 10px;
+  border-radius: 8px;
+  border: 1px solid #b5d6ea;
+  padding: 6px 10px;
+}
+input[type="number"]::-webkit-input-placeholder,
+input[type="text"]::-webkit-input-placeholder {
+  color: #b5b5b5;
+  font-size: 0.98em;
+}
+.symptom-checkboxes label {
+  font-weight: 400;
+  color: #444;
+  margin-right: 18px;
+  margin-bottom: 8px;
+}
+/* Make the pain level slider longer */
+#pain_level.form-range {
+  width: 80vw;
+  max-width: 100%;
+  min-width: 250px;
+  margin-left: 0;
+}
+.analyze-btn {
+  margin-top: 18px;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e63946 0%, #ff7675 100%);
+  border: none;
+  color: #fff;
+  font-size: 1.1em;
+  padding: 10px 0;
+  transition: background 0.2s;
+}
+.analyze-btn:hover {
+  background: linear-gradient(90deg, #b71c1c 0%, #ff7675 100%);
+}
+.pred {
+  background: #e3f6fc;
+  border: 2px solid #e63946;
+  border-radius: 18px;
+  padding: 28px 32px;
+  margin: 32px auto 0 auto;
+  max-width: 100%;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  font-size: 1.15em;
+  color: #15597c;
+  transition: box-shadow 0.3s;
+}
+.pred b {
+  color: #0074d9;
+}
+/* Highlight the prediction summary box */
+.pred.mt-4 {
+  background: #ffffff;
+  border: 2px solid #e63946;
+  border-radius: 18px;
+  padding: 32px 36px;
+  margin: 36px auto 0 auto;
+  max-width: 100%;
+  font-size: 1.18em;
+  color: #222;
+  transition: box-shadow 0.3s;
+}
+.wait-time {
+  background: #e8eced;
+  border-radius: 8px;
+  padding: 8px 16px;
+  float: right;
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 1em;
+}
+.rec-action {
+  margin-top: 18px;
+  font-weight: 600;
+  color: #0c5460;
+  font-size: 1.08em;
+}
+.dashboard {
+  background:#fff;
+  box-shadow:0 2px 12px rgba(0,0,0,0.08);
+  padding:28px 24px;
+  max-width:100%;
+  margin:32px auto;
+  border: 2px solid #e63946;
+  border-radius: 18px;
+}
+.dashboard h4 {
+  color:#0074d9;
+  font-weight:600;
+  margin-bottom:18px;
+}
+.dashboard .badge {
+  padding:6px 14px;
+  border-radius:8px;
+  font-size:1em;
+}
+@media (max-width: 700px) {
+  .card-form, .pred, .dashboard { padding: 14px 2vw; }
+}
+</style>
+
+<div class="card-form">
+  <form action="/predictor" method="POST">
+    <div class="form-section-label">New Patient</div>
+    <div class="form-group input-icon">
+      <i class="bi bi-person"></i>
+      <label for="patient_name">Patient Name</label>
+      <input class="form-control" type="text" name="patient_name" id="patient_name" placeholder="Enter patient name" required>
+    </div>
+    <div class="form-group input-icon">
+      <i class="bi bi-calendar"></i>
+      <label for="age">Age</label>
+      <input class="form-control" type="number" name="age" id="age" placeholder="Years" required>
+    </div>
+    <div class="form-group input-icon">
+      <i class="bi bi-heart-pulse"></i>
+      <label for="heart_rate">Heart Rate</label>
+      <input class="form-control" type="number" name="heart_rate" id="heart_rate" placeholder="BPM (60-100)" required>
+    </div>
+    <div class="form-group input-icon">
+      <i class="bi bi-thermometer-half"></i>
+      <label for="body_temp">Temperature</label>
+      <input class="form-control" type="number" step="any" name="body_temp" id="body_temp" placeholder="°C (36.5-37.5)" required>
+    </div>
+    <div class="form-group input-icon">
+      <i class="bi bi-droplet-half"></i>
+      <label for="oxygen_saturation">Oxygen Saturation</label>
+      <input class="form-control" type="number" step="any" name="oxygen_saturation" id="oxygen_saturation" placeholder="% (95-100)" required>
+    </div>
+    <div class="form-section-label" style="margin-top:20px;">Symptoms</div>
+    <div class="symptom-checkboxes">
+      <label><input type="checkbox" name="symptoms" value="Chest Pain"
+        {% if symptoms_selected and 'Chest Pain' in symptoms_selected %}checked{% endif %}> Chest Pain</label>
+      <label><input type="checkbox" name="symptoms" value="Shortness of Breath"
+        {% if symptoms_selected and 'Shortness of Breath' in symptoms_selected %}checked{% endif %}> Shortness of Breath</label>
+      <label><input type="checkbox" name="symptoms" value="Dizziness"
+        {% if symptoms_selected and 'Dizziness' in symptoms_selected %}checked{% endif %}> Dizziness</label>
+      <label><input type="checkbox" name="symptoms" value="Nausea"
+        {% if symptoms_selected and 'Nausea' in symptoms_selected %}checked{% endif %}> Nausea</label>
+      <label><input type="checkbox" name="symptoms" value="Headache"
+        {% if symptoms_selected and 'Headache' in symptoms_selected %}checked{% endif %}> Headache</label>
+      <label><input type="checkbox" name="symptoms" value="Abdominal Pain"
+        {% if symptoms_selected and 'Abdominal Pain' in symptoms_selected %}checked{% endif %}> Abdominal Pain</label>
+      <label><input type="checkbox" name="symptoms" value="Bleeding"
+        {% if symptoms_selected and 'Bleeding' in symptoms_selected %}checked{% endif %}> Bleeding</label>
+      <label><input type="checkbox" name="symptoms" value="Trauma"
+        {% if symptoms_selected and 'Trauma' in symptoms_selected %}checked{% endif %}> Trauma</label>
+      <label><input type="checkbox" name="symptoms" value="Allergy"
+        {% if symptoms_selected and 'Allergy' in symptoms_selected %}checked{% endif %}> Allergy</label>
+      <label><input type="checkbox" name="symptoms" value="Fever"
+        {% if symptoms_selected and 'Fever' in symptoms_selected %}checked{% endif %}> Fever</label>
+      <label><input type="checkbox" name="symptoms" value="Other"
+        {% if symptoms_selected and 'Other' in symptoms_selected %}checked{% endif %}> Other</label>
+    </div>
+    <!-- Pain Level Slider -->
+    <div class="form-section-label" style="margin-top:24px;">Pain Level (0-10)</div>
+    <div class="mb-3">
+      <input type="range" class="form-range" min="0" max="10" step="1" id="pain_level" name="pain_level"
+        value="{{ pain_level if pain_level is defined else 0 }}"
+        oninput="document.getElementById('painValue').innerText = this.value;">
+      <div class="d-flex justify-content-between" style="font-size:1em;">
+        <span>No Pain</span>
+        <span>Moderate</span>
+        <span>Severe</span>
+      </div>
+      <div style="color:#888;font-size:1em;">
+        Current value: <span id="painValue">{{ pain_level if pain_level is defined else 0 }}</span>
+      </div>
+    </div>
+
+    <!-- AVPU Radio Buttons -->
+    <div class="form-section-label" style="margin-top:24px;">Level of Consciousness (AVPU)</div>
+    <div class="mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="avpu" id="avpu_alert" value="Alert"
+          {% if avpu == "Alert" or avpu is not defined %}checked{% endif %}>
+        <label class="form-check-label" for="avpu_alert" style="color:#e63946;font-weight:600;">Alert</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="avpu" id="avpu_verbal" value="Responds to Verbal Stimuli"
+          {% if avpu == "Responds to Verbal Stimuli" %}checked{% endif %}>
+        <label class="form-check-label" for="avpu_verbal" style="color:#e63946;">Responds to Verbal Stimuli</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="avpu" id="avpu_pain" value="Responds to Pain"
+          {% if avpu == "Responds to Pain" %}checked{% endif %}>
+        <label class="form-check-label" for="avpu_pain" style="color:#e63946;">Responds to Pain</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="avpu" id="avpu_unresponsive" value="Unresponsive"
+          {% if avpu == "Unresponsive" %}checked{% endif %}>
+        <label class="form-check-label" for="avpu_unresponsive" style="color:#e63946;">Unresponsive</label>
+      </div>
+    </div>
+    <button type="submit" class="analyze-btn">Analyze Patient</button>
+  </form>
+</div>
+
+{% if pred %}
+  <div class="pred mt-4">
+    {% if estimated_wait %}
+      <div class="wait-time">
+        <i class="bi bi-clock-history" style="color:#1976d2;font-size:1.3em;vertical-align:middle;margin-right:6px;"></i>
+        <b>Estimated Wait Time:</b> {{ estimated_wait }}
+      </div>
+    {% endif %}
+    <b>PREDICTION FOR: {{ patient_name }}</b><br>
+    {{ pred }}
+    {% for p in prediction %}
+      <br>{{ p['name'] }}: {{ 100*p['prob'] | round(2) }}%
+    {% endfor %}
+    <div class="rec-action">
+      <b>Recommended Action:</b> {{ recommended_action }}
+    </div>
+    <div id="hospital-info"></div>
+    {% if "CRITICAL" in pred.upper() %}
+      <script>
+      function showNearbyHospitals() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                  var lat = position.coords.latitude;
+                  var lon = position.coords.longitude;
+                  var mapsUrl = `https://www.google.com/maps/search/hospital/@${lat},${lon},14z`;
+                  document.getElementById('hospital-info').innerHTML =
+                      `<div class="alert alert-warning mt-3">
+                          <b>Nearby Hospitals:</b><br>
+                          <a href="${mapsUrl}" target="_blank">View hospitals near you on Google Maps</a>
+                      </div>`;
+              }, function() {
+                  document.getElementById('hospital-info').innerHTML =
+                      `<div class="alert alert-warning mt-3">
+                          <b>Nearby Hospitals:</b> Unable to access your location.
+                      </div>`;
+              });
+          } else {
+              document.getElementById('hospital-info').innerHTML =
+                  `<div class="alert alert-warning mt-3">
+                      <b>Nearby Hospitals:</b> Geolocation is not supported by your browser.
+                  </div>`;
+          }
+      }
+      showNearbyHospitals();
+      </script>
+    {% endif %}
+  </div>
+
+  <!-- DASHBOARD START -->
+  <div class="dashboard mt-4">
+    <h4>Patient Dashboard</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:18px;">
+      <div style="flex:1;min-width:180px;">
+        <b>Name:</b> {{ patient_name }}<br>
+        <b>Age:</b> {{ request.form['age'] }}<br>
+        <b>Heart Rate:</b> {{ request.form['heart_rate'] }} bpm<br>
+        <b>Temperature:</b> {{ request.form['body_temp'] }} °C<br>
+        <b>Oxygen Saturation:</b> {{ request.form['oxygen_saturation'] }} %<br>
+        <b>Symptoms:</b>
+        {% if symptoms_selected %}
+          {{ symptoms_selected|join(', ') }}
+        {% else %}
+          None
+        {% endif %}
+        <br>
+        <b>Pain Level:</b> {{ pain_level or request.form['pain_level'] }}<br>
+        <b>Consciousness (AVPU):</b> {{ avpu or request.form['avpu'] }}<br>
+      </div>
+      <div style="flex:1;min-width:180px;">
+        {% set max_pred = prediction | sort(attribute='prob', reverse=True) | first %}
+        {% set pred_clean = max_pred['name'].strip().lower() %}
+        {% if pred_clean == "critical" %}
+          <span class="badge badge-danger" style="background:#e63946;color:#fff;">Critical</span>
+        {% elif pred_clean == "not critical" %}
+          <span class="badge badge-success" style="background:#43aa8b;color:#fff;">Not Critical</span>
+        {% else %}
+          <span class="badge badge-secondary">Unknown</span>
+        {% endif %}
+        <br><br>
+        <b>Probability:</b>
+        <div style="margin-top:8px;">
+          {% for p in prediction %}
+            <div style="margin-bottom:6px;">
+              <span style="display:inline-block;width:110px;">{{ p['name'] }}</span>
+              <div style="display:inline-block;width:60%;vertical-align:middle;">
+                <div style="background:#e0eafc;border-radius:6px;height:14px;overflow:hidden;">
+                  <div style="background:#0074d9;height:14px;border-radius:6px;width: {{ (100 * p['prob'] | round(2)) }}%;"></div>
+                </div>
+              </div>
+              <span style="margin-left:8px;">{{ 100*p['prob']|round(2) }}%</span>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <hr>
+    <button class="btn btn-outline-primary" onclick="window.location.href='/'" style="margin-top:10px;">Analyze New Patient</button>
+  </div>
+  <!-- DASHBOARD END -->
+{% endif %}
+{% endblock %}

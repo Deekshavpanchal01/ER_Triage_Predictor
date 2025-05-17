@@ -1,0 +1,47 @@
+<html lang="en" dir="ltr">
+  <head>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type=text/javascript>
+    $( document ).ready(function(){
+
+  // Sets up click behavior on all button elements with the alert class
+  // that exist in the DOM when the instruction was executed
+  $( "button" ).on( "click", function() {
+      console.log('click');
+      var fired_button = $(this).value;
+      var asJSON = JSON.stringify(fired_button);
+  });
+});
+    $(function() {
+      $('a#process_input').bind('click', function() {
+        $.getJSON('/background_process', {
+          proglang: $('input[name="proglang"]').val(),
+				    }, function(data) {
+				  $("#result").text(data.result);
+        });
+      return false;
+      });
+    });
+  </script>
+</head>
+<body>
+  {% extends "index.html" %}
+  {% block content %}
+  <div class='container'>
+		<h3>Welcome! Which is the best programming language of them all?</h3>
+			<form>
+				<input type=text size=5 name=proglang>
+				<a href=# id=process_input><button class='btn btn-default'>Submit</button></a>
+			</form>
+		<p id=result></p>
+		</div>
+
+    {{ result }}
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
